@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>NGO Training Management System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; }
+    header { background: #0b5ed7; color: white; padding: 15px 20px; display:flex; justify-content:space-between; align-items:center; }
+    nav a { color: white; margin-left: 15px; text-decoration: none; font-weight: bold; }
+    .container { padding: 30px; }
+    .hidden { display:none; }
+    .cards { display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+    .card { background:white; padding:25px; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.1); cursor:pointer; transition:0.3s; }
+    .card:hover { transform: translateY(-5px); }
+    .card i { font-size:32px; color:#0b5ed7; margin-bottom:10px; }
+    form input, form select { width:100%; padding:8px; margin:8px 0; }
+    button { padding:10px 15px; background:#0b5ed7; color:white; border:none; border-radius:5px; cursor:pointer; }
+    table { width:100%; border-collapse:collapse; margin-top:20px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+    footer { background:#222; color:white; text-align:center; padding:12px; margin-top:30px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h2><i class="fa-solid fa-handshake-angle"></i> NGO Training System</h2>
+  <nav>
+    <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+    <a href="#" onclick="showPage('trainee')">Trainees</a>
+    <a href="#" onclick="showPage('attendance')">Attendance</a>
+    <a href="#" onclick="showPage('skills')">Skills</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <!-- Dashboard -->
+  <div id="dashboard">
+    <h2>Admin Dashboard</h2>
+    <div class="cards">
+      <div class="card" onclick="showPage('trainee')"><i class="fa-solid fa-users"></i><h3>Trainee Management</h3></div>
+      <div class="card" onclick="showPage('attendance')"><i class="fa-solid fa-calendar-check"></i><h3>Attendance</h3></div>
+      <div class="card" onclick="showPage('skills')"><i class="fa-solid fa-chart-line"></i><h3>Skill Tracking</h3></div>
+    </div>
+  </div>
+
+  <!-- Trainee Page -->
+  <div id="trainee" class="hidden">
+    <h2>Trainee Registration</h2>
+    <form onsubmit="addTrainee(event)">
+      <input type="text" id="tname" placeholder="Trainee Name" required />
+      <input type="text" id="tcourse" placeholder="Training Program" required />
+      <button>Add Trainee</button>
+    </form>
+    <table>
+      <thead><tr><th>Name</th><th>Program</th></tr></thead>
+      <tbody id="traineeTable"></tbody>
+    </table>
+  </div>
+
+  <!-- Attendance -->
+  <div id="attendance" class="hidden">
+    <h2>Attendance Entry</h2>
+    <form onsubmit="markAttendance(event)">
+      <input type="text" id="aname" placeholder="Trainee Name" required />
+      <select id="astatus"><option>Present</option><option>Absent</option></select>
+      <button>Submit</button>
+    </form>
+    <ul id="attendanceList"></ul>
+  </div>
+
+  <!-- Skills -->
+  <div id="skills" class="hidden">
+    <h2>Skill Improvement</h2>
+    <form onsubmit="addSkill(event)">
+      <input type="text" id="sname" placeholder="Trainee Name" required />
+      <input type="text" id="sskill" placeholder="Skill Improved" required />
+      <button>Update</button>
+    </form>
+    <ul id="skillList"></ul>
+  </div>
+
+</div>
+
+<footer>
+  © 2026 NGO Training Management System – Academic Project
+</footer>
+
+<script>
+  function showPage(id){
+    document.querySelectorAll('.container > div').forEach(d=>d.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  function addTrainee(e){
+    e.preventDefault();
+    const name=tname.value, course=tcourse.value;
+    traineeTable.innerHTML += `<tr><td>${name}</td><td>${course}</td></tr>`;
+    e.target.reset();
+  }
+
+  function markAttendance(e){
+    e.preventDefault();
+    attendanceList.innerHTML += `<li>${aname.value} - ${astatus.value}</li>`;
+    e.target.reset();
+  }
+
+  function addSkill(e){
+    e.preventDefault();
+    skillList.innerHTML += `<li>${sname.value} : ${sskill.value}</li>`;
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
